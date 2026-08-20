@@ -53,6 +53,8 @@ public class Book {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    public Book() {}
+
     public Book(Long id, String title, String author, Double price, String isbn, Integer quantity, String description, String coverImage, LocalDateTime createdAt, LocalDateTime updateAt, Category category) {
         this.id = id;
         this.title = title;

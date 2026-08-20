@@ -10,12 +10,15 @@ package com.bookstore.book_management.Repository;
  *
  * @author Admin
  */
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.bookstore.book_management.Entity.User;
-import java.util.List;
 
 
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByUsername(String username);
+
+    User findByEmail(String email);
 };

@@ -8,6 +8,7 @@ package com.bookstore.book_management.Service;
 import org.springframework.stereotype.Service;
 import com.bookstore.book_management.Repository.RoleRepository;
 import com.bookstore.book_management.Entity.Role;
+import java.util.List;
 
 /**
  *
@@ -22,6 +23,9 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
+    }
     public Role createRole(Role role) {
         return roleRepository.save(role);
     }

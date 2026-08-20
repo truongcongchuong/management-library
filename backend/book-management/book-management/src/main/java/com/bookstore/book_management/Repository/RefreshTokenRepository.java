@@ -5,21 +5,16 @@
 
 package com.bookstore.book_management.Repository;
 
-
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.bookstore.book_management.Entity.Book;
-
-
+import java.util.List;
+import com.bookstore.book_management.Entity.RefreshToken;
 /**
  *
  * @author Admin
  */
-public interface BookRepository
-    extends JpaRepository<Book, Long> {
-        List<Book> findByCategoryId(Long categoryId);
+public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
+    List<RefreshToken> findByUserId(Long userId);
+    RefreshToken findByToken(String token);
 
-        List<Book> findByTitleContainingIgnoreCase(String title);
-    }
+    boolean deleteByToken(String token);
+}

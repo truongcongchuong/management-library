@@ -42,6 +42,7 @@ public class BorrowRecord {
 
     private LocalDateTime returnDate;
 
+    public BorrowRecord() {}
     public BorrowRecord(Long id, User user, Book book, LocalDateTime borrowDate, LocalDateTime returnDate) {
         this.id = id;
         this.user = user;
