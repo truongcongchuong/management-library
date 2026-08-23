@@ -9,26 +9,40 @@ package com.bookstore.book_management.Service;
  *
  * @author Admin
  */
-import org.springframework.stereotype.Service;
-import com.bookstore.book_management.Repository.BorrowRecordRepository;
-import com.bookstore.book_management.Entity.BorrowRecord;
-import java.util.List;
 import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+
+import com.bookstore.book_management.Entity.BorrowRecord;
+import com.bookstore.book_management.Repository.BorrowRecordRepository;
 
 @Service
 public class BorrowRecordService {
     private final BorrowRecordRepository borrowRecordRepository;
+    private final AuthService authService;
 
-    public BorrowRecordService(BorrowRecordRepository borrowRecordRepository) {
+    public BorrowRecordService(BorrowRecordRepository borrowRecordRepository, AuthService authService) {
         this.borrowRecordRepository = borrowRecordRepository;
+        this.authService = authService;
     }
 
     public BorrowRecord createBorrowRecord(BorrowRecord borrowRecord) {
         return borrowRecordRepository.save(borrowRecord);
     }
 
-    public BorrowRecord getBorrowRecordById(Long id) {
-        return borrowRecordRepository.findById(id).orElse(null);
+    public BorrowRecord getBorrowRecordById(Long id, Authentication authentication) {
+
+        BorrowRecord borrowRecord = borrowRecordRepository.findById(id).orElse(null);
+
+        if (borrowRecord != null) {
+            if(!authService.canAccessUser(authentication, borrowRecord.getUser().getId())) {
+                return null;
+            }
+        }
+
+        return borrowRecord;
     }
 
     public BorrowRecord updateBorrowRecord(Long id, BorrowRecord updatedBorrowRecord) {
@@ -52,7 +66,11 @@ public class BorrowRecordService {
         return borrowRecordRepository.findAll();
     }
 
-    public List<BorrowRecord> getBorrowRecordsByUserId(Long userId) {
+    public List<BorrowRecord> getBorrowRecordsByUserId(Long userId, Authentication authentication) {
+
+            if(!authService.canAccessUser(authentication, userId)) {
+                return null;
+            }
         return borrowRecordRepository.findByUserId(userId);
     }
 
@@ -60,7 +78,12 @@ public class BorrowRecordService {
         return borrowRecordRepository.findByBookId(bookId);
     }
 
-    public List<BorrowRecord> getBorrowRecordsByUserIdAndBookId(Long userId, Long bookId) {
+    public List<BorrowRecord> getBorrowRecordsByUserIdAndBookId(Long userId, Long bookId, Authentication authentication) {
+
+        if(!authService.canAccessUser(authentication, userId)) {
+            return null;
+        }
+        
         return borrowRecordRepository.findByUserIdAndBookId(userId, bookId);
     }
 

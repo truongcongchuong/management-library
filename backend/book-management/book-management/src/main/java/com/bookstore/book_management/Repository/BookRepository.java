@@ -22,4 +22,5 @@ public interface BookRepository
         List<Book> findByCategoryId(Long categoryId);
 
         List<Book> findByTitleContainingIgnoreCase(String title);
+        boolean existsByIsbn(String isbn);
     }

@@ -2,11 +2,14 @@ package com.bookstore.book_management.Service;
 
 import java.time.LocalDateTime;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.bookstore.book_management.Dto.ApiResponse;
 import com.bookstore.book_management.Dto.AuthResponse;
+import com.bookstore.book_management.Dto.JwtAccess;
 import com.bookstore.book_management.Dto.LoginRequest;
 import com.bookstore.book_management.Entity.RefreshToken;
 import com.bookstore.book_management.Entity.User;
@@ -28,73 +31,166 @@ public class AuthService {
         this.refreshTokenService = refreshTokenService;
     }
 
-    public AuthResponse login(LoginRequest loginRequest) {
-        User user = userRepository.findByEmail(loginRequest.getEmail());
+    public ApiResponse<?> login(LoginRequest loginRequest) {
 
-        if (user == null) {
-            return new AuthResponse(null, null);
+        try {
+
+            User user =
+                    userRepository.findByEmail(
+                            loginRequest.getEmail()
+                    );
+
+            if (user == null || !passwordEncoder.matches(
+                loginRequest.getPassword(),user.getPassword())
+            ) {
+
+                return ApiResponse.unauthorized(
+                        "Invalid email or password"
+                );
+            }
+
+            String accessToken =
+                    jwtService.generateAccessToken(
+                            user.getId(),
+                            user.getUsername(),
+                            user.getRole().getName()
+                    );
+
+            String refreshToken =
+                    jwtService.generateRefreshToken(
+                            user.getId()
+                    );
+
+            refreshTokenService.createRefreshToken(
+                    new RefreshToken(
+                            refreshToken,
+                            LocalDateTime.now().plusDays(7)
+                    )
+            );
+
+            return ApiResponse.ok(
+                    new AuthResponse(
+                            accessToken,
+                            refreshToken
+                    )
+            );
+
+        } catch (Exception e) {
+
+            return ApiResponse.internalServerError();
         }
-
-        boolean isValid =
-        passwordEncoder.matches(
-                loginRequest.getPassword(),
-                user.getPassword()
-        );
-
-        if (!isValid) {
-            return new AuthResponse(null, null);
-        }
-
-
-        String accessToken = jwtService.generateAccessToken(user.getId(), user.getUsername(), user.getRole().getName());
-        String refreshToken = jwtService.generateRefreshToken(user.getId());
-
-        refreshTokenService.createRefreshToken(new RefreshToken(refreshToken, LocalDateTime.now().plusHours(24)));
-
-        return new AuthResponse(accessToken, refreshToken);
     }
 
-    public String register(User user) {
-        if (userRepository.findByEmail(user.getEmail()) != null) {
-            return "Email already exists";
-        }
+    public ApiResponse<?> register(User user) {
+        try {
+            if (userRepository.findByEmail(user.getEmail()) != null) {
+                return ApiResponse.conflict("Email already exists");
+            }
 
-        userService.createUser(user);
-        return "User registered successfully";
+            userService.createUser(user);
+            return ApiResponse.ok(null, "User registered successfully");
+        } catch (Exception e) {
+            return ApiResponse.internalServerError();
+        }
+        
     }
 
-    public AuthResponse refreshToken(String refreshToken) {
+    public ApiResponse<?> refreshToken(String refreshToken) {
+
         try {
 
             if (!jwtService.validateRefreshToken(refreshToken)) {
-                return new AuthResponse(null, null);
+
+                return ApiResponse.unauthorized(
+                        "Invalid or expired refresh token"
+                );
             }
 
-            if (refreshTokenService.getRefreshTokenByToken(refreshToken) == null) {
-                return new AuthResponse(null, null);
-                
+            if (refreshTokenService
+                    .getRefreshTokenByToken(refreshToken) == null) {
+
+                return ApiResponse.unauthorized(
+                        "Refresh token not found"
+                );
             }
 
-            Long userId = jwtService.extractUserId(refreshToken);
-            User user = userService.getUserById(userId);
+            Long userId =
+                    jwtService.extractUserId(refreshToken);
 
-            if (user != null) {
-                String newAccessToken = jwtService.generateAccessToken(user.getId(), user.getUsername(), user.getRole().getName());
-                return new AuthResponse(newAccessToken, refreshToken);
-            } else {
-                return new AuthResponse(null, null);
+            User user =
+                    userRepository.findById(userId)
+                            .orElse(null);
+
+            if (user == null) {
+
+                return ApiResponse.notFound(
+                        "User not found"
+                );
             }
+
+            String newAccessToken =
+                    jwtService.generateAccessToken(
+                            user.getId(),
+                            user.getUsername(),
+                            user.getRole().getName()
+                    );
+
+            AuthResponse response =
+                    new AuthResponse(
+                            newAccessToken,
+                            refreshToken
+                    );
+
+            return ApiResponse.ok(
+                    response,
+                    "Access token refreshed successfully"
+            );
+
         } catch (Exception e) {
-            return new AuthResponse(null, null);
+
+            return ApiResponse.internalServerError();
         }
     }
 
-    public String logout(String token) {
-        if (!jwtService.validateRefreshToken(token)) {
-            return "Invalid refresh token";
-        }
+    public ApiResponse<?> logout(String refreshToken) {
 
-        refreshTokenService.logout(token);
-        return "Logout successful";
+        try {
+
+            if (!jwtService.validateRefreshToken(refreshToken)) {
+
+                return ApiResponse.unauthorized(
+                        "Invalid or expired refresh token"
+                );
+            }
+
+            if (refreshTokenService
+                    .getRefreshTokenByToken(refreshToken) == null) {
+
+                return ApiResponse.notFound(
+                        "Refresh token not found"
+                );
+            }
+
+            refreshTokenService.logout(refreshToken);
+
+            return ApiResponse.ok(
+                    null,
+                    "Logout successful"
+            );
+
+        } catch (Exception e) {
+
+            return ApiResponse.internalServerError();
+        }
+    }
+
+    public boolean canAccessUser(Authentication authentication, Long id) {
+
+        JwtAccess jwt = (JwtAccess) authentication.getPrincipal();
+
+        return !(
+                jwt.getRole().equals("USER")
+                && !jwt.getId().equals(id)
+        );
     }
 }

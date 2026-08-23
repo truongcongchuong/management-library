@@ -9,8 +9,6 @@ package com.bookstore.book_management.Controller;
  *
  * @author Admin
  */
-import java.util.List;
-
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
 
+import com.bookstore.book_management.Dto.ApiResponse;
 import com.bookstore.book_management.Entity.User;
 import com.bookstore.book_management.Service.UserService;
 
@@ -35,25 +35,25 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public List<User> getAllUsers() {
+    public ApiResponse<?> getAllUsers() {
         return service.getAllUsers();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public User getUserById(@PathVariable Long id) {
-        return service.getUserById(id);
+    public ApiResponse<?> getUserById(@PathVariable Long id, Authentication authentication) {
+        return service.getUserById(id, authentication);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteUser(@PathVariable Long id) {
-        service.deleteUser(id);
+    public ApiResponse<?> deleteUser(@PathVariable Long id) {
+        return service.deleteUser(id);
     }
 
     @PostMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public User updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        return service.updateUser(id, updatedUser);
+    public ApiResponse<?> updateUser(@PathVariable Long id, @RequestBody User updatedUser, Authentication authentication) {
+        return service.updateUser(id, updatedUser, authentication);
     }
 }

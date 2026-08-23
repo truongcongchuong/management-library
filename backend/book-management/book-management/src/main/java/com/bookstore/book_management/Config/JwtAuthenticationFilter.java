@@ -18,6 +18,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import com.bookstore.book_management.Dto.JwtAccess;
+
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -39,8 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain)
             throws ServletException, IOException {
 
-        String authHeader =
-                request.getHeader("Authorization");
+        String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null
                 || !authHeader.startsWith("Bearer ")) {
@@ -51,8 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
 
-            String token =
-                    authHeader.substring(7);
+            String token = authHeader.substring(7);
 
             if (!jwtService.validateAccessToken(token)) {
 
@@ -60,11 +60,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            Long userId =
-                    jwtService.extractUserId(token);
+            Long userId = jwtService.extractUserId(token);
 
-            User user =
-                    userService.getUserById(userId);
+            User user = (User) userService.getUserById(userId, null).getData();
 
             if (user == null) {
 
@@ -72,17 +70,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            String role =
-                    jwtService.extractRole(token);
+            String role = jwtService.extractRole(token);
 
-            List<SimpleGrantedAuthority> authorities =
-                    List.of(
-                            new SimpleGrantedAuthority(
-                                    "ROLE_" + role));
+            List<SimpleGrantedAuthority> authorities =List.of(new SimpleGrantedAuthority("ROLE_" + role));
+
+            JwtAccess jwt = new JwtAccess(user.getId(), user.getUsername(), role);
 
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
-                            user,
+                            jwt,
                             null,
                             authorities);
 

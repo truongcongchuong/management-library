@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,12 +44,12 @@ public class BorrowRecordController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public BorrowRecord getBorrowRecordById(@PathVariable Long id) {
-        return service.getBorrowRecordById(id);
+    public BorrowRecord getBorrowRecordById(@PathVariable Long id,  Authentication authentication) {
+        return service.getBorrowRecordById(id, authentication);
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public BorrowRecord createBorrowRecord(@RequestBody BorrowRecord borrowRecord) {
         return service.createBorrowRecord(borrowRecord);
     }
@@ -67,14 +68,15 @@ public class BorrowRecordController {
 
     @GetMapping("/user/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public List<BorrowRecord> getBorrowRecordsByUserId(@PathVariable long id) {
-        return service.getBorrowRecordsByUserId(id);
+    public List<BorrowRecord> getBorrowRecordsByUserId(@PathVariable long id, Authentication authentication) {
+        return service.getBorrowRecordsByUserId(id, authentication);
     }
 
     @GetMapping("/user/{userId}/book/{bookId}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public List<BorrowRecord> getBorrowRecordsByUserIdAndBookId(@PathVariable long userId, @PathVariable long bookId) {
-        return service.getBorrowRecordsByUserIdAndBookId(userId, bookId);
+    public List<BorrowRecord> getBorrowRecordsByUserIdAndBookId(@PathVariable long userId, @PathVariable long bookId, Authentication authentication) {
+
+        return service.getBorrowRecordsByUserIdAndBookId(userId, bookId, authentication);
     }
     
     @GetMapping("/returnBook/{borrowRecordId}")

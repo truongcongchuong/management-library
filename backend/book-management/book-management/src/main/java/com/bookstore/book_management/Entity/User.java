@@ -11,6 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 /**
  *
  * @author Admin
@@ -22,14 +25,20 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Username is required")
     private String username;
 
     @Column(unique = true)
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
     private String email;
     private String password;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, message = "Password must be at least 6 characters")
     private Role role;
 
     public User() {}

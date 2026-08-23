@@ -13,6 +13,7 @@ package com.bookstore.book_management.Controller;
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bookstore.book_management.Dto.ApiResponse;
 import com.bookstore.book_management.Entity.Book;
 import com.bookstore.book_management.Service.BookService;
 
@@ -37,42 +39,42 @@ public class BookController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public List<Book> getAllBooks() {
+    public ApiResponse<?> getAllBooks(Authentication authentication) {
         return service.getAllBooks();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public Book getBookById(@PathVariable Long id) {
+    public ApiResponse<?> getBookById(@PathVariable Long id) {
         return service.getBookById(id);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public Book createBook(@RequestBody Book book) {
+    public ApiResponse<?> createBook(@RequestBody Book book) {
         return service.createBook(book);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteBook(@PathVariable Long id) {
-        service.deleteBook(id);
+    public ApiResponse<?> deleteBook(@PathVariable Long id) {
+        return service.deleteBook(id);
     }
 
     @PostMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Book updateBook(@PathVariable Long id, @RequestBody Book updatedBook) {
+    public ApiResponse<?> updateBook(@PathVariable Long id, @RequestBody Book updatedBook) {
         return service.updateBook(id, updatedBook);
     }
 
     @GetMapping("/search")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public List<Book> searchBooksByTitle(@RequestParam String title) {
+    public ApiResponse<?> searchBooksByTitle(@RequestParam String title) {
         return service.findByTitleContainingIgnoreCase(title);
     }
 
     @GetMapping("/category/{categoryId}")
-    public List<Book> getBooksByCategory(@PathVariable Long categoryId) {
+    public ApiResponse<?> getBooksByCategory(@PathVariable Long categoryId) {
         return service.findBooksbyCategoryId(categoryId);
     }
 }
