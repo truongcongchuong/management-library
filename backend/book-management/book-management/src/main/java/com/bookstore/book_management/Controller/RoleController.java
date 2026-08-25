@@ -9,8 +9,6 @@ package com.bookstore.book_management.Controller;
  *
  * @author Admin
  */
-import java.util.List;
-
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bookstore.book_management.Dto.ApiResponse;
 import com.bookstore.book_management.Entity.Role;
 import com.bookstore.book_management.Service.RoleService;
 
@@ -38,32 +37,32 @@ public class RoleController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Role> getAllRoles() {
+    public ApiResponse<?> getAllRoles() {
         return service.getAllRoles();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Role getRoleById(@PathVariable Long id) {
+    public ApiResponse<?> getRoleById(@PathVariable Long id) {
         return service.getRoleById(id);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public Role createRole(@RequestBody Role role) {
+    public ApiResponse<?> createRole(@RequestBody Role role) {
         return service.createRole(role);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Role updateRole(@PathVariable Long id, @RequestBody Role updatedRole) {
+    public ApiResponse<?> updateRole(@PathVariable Long id, @RequestBody Role updatedRole) {
         return service.updateRole(id, updatedRole);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteRole(@PathVariable Long id) {
-        service.deleteRole(id);
+    public ApiResponse<?> deleteRole(@PathVariable Long id) {
+        return service.deleteRole(id);
     }
 
 

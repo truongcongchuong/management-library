@@ -1,5 +1,7 @@
 package com.bookstore.book_management.Controller;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,23 +27,23 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @RequestMapping("/login")
-    public ApiResponse<?> login(@Valid LoginRequest loginRequest) {
+    @PostMapping("/login")
+    public ApiResponse<?> login(@Valid @RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
 
-    @RequestMapping("/refresh")
-    public ApiResponse<?> refreshToken(RefreshRequest refreshRequest) {
+    @PostMapping("/refresh")
+    public ApiResponse<?> refreshToken(@Valid @RequestBody RefreshRequest refreshRequest) {
         return authService.refreshToken(refreshRequest.getRefreshToken());
     }
 
-    @RequestMapping("/logout")
-    public ApiResponse<?> logout(RefreshRequest refreshRequest) {
+    @PostMapping("/logout")
+    public ApiResponse<?> logout(@Valid @RequestBody RefreshRequest refreshRequest) {
         return authService.logout(refreshRequest.getRefreshToken());
     }
 
-    @RequestMapping("/register")
-    public ApiResponse<?> register(@Valid User user) {
+    @PostMapping("/register")
+    public ApiResponse<?> register(@Valid @RequestBody User user) {
         return userService.createUser(user);
     }
 }

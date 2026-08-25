@@ -66,7 +66,6 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ApiResponse<?> searchBooksByTitle(@RequestParam String title) {
         return service.findByTitleContainingIgnoreCase(title);
     }

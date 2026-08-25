@@ -9,7 +9,6 @@ package com.bookstore.book_management.Controller;
  *
  * @author Admin
  */
-import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bookstore.book_management.Dto.ApiResponse;
 import com.bookstore.book_management.Entity.Category;
 import com.bookstore.book_management.Service.CategoryService;
 
@@ -35,30 +35,30 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> getAllCategories() {
+    public ApiResponse<?> getAllCategories() {
         return service.getAllCategories();
     }
 
     @GetMapping("/{id}")
-    public Category getCategoryById(@PathVariable Long id) {
+    public ApiResponse<?> getCategoryById(@PathVariable Long id) {
         return service.getCategoryById(id);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public Category createCategory(@RequestBody Category category) {
+    public ApiResponse<?> createCategory(@RequestBody Category category) {
         return service.createCategory(category);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteCategory(@PathVariable Long id) {
-        service.deleteCategory(id);
+    public ApiResponse<?> deleteCategory(@PathVariable Long id) {
+        return service.deleteCategory(id);
     }
 
     @PostMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Category updateCategory(@PathVariable Long id, @RequestBody Category updatedCategory) {
+    public ApiResponse<?> updateCategory(@PathVariable Long id, @RequestBody Category updatedCategory) {
         return service.updateCategory(id, updatedCategory);
     }
 }

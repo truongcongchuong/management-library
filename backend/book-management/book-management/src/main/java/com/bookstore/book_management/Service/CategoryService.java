@@ -12,39 +12,128 @@ package com.bookstore.book_management.Service;
 import org.springframework.stereotype.Service;
 import com.bookstore.book_management.Repository.CategoryRepository;
 import com.bookstore.book_management.Entity.Category;
-import java.util.List;
+import com.bookstore.book_management.Dto.ApiResponse;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(
+            CategoryRepository categoryRepository
+    ) {
         this.categoryRepository = categoryRepository;
     }
 
-    public Category createCategory(Category category) {
-        return categoryRepository.save(category);
-    }
+    public ApiResponse<?> createCategory(
+            Category category
+    ) {
 
-    public Category getCategoryById(Long id) {
-        return categoryRepository.findById(id).orElse(null);
-    }
+        try {
 
-    public Category updateCategory(Long id, Category updatedCategory) {
-        Category existingCategory = categoryRepository.findById(id).orElse(null);
-        if (existingCategory != null) {
-            existingCategory.setName(updatedCategory.getName());
-            return categoryRepository.save(existingCategory);
+            Category saved =
+                    categoryRepository.save(category);
+
+            return ApiResponse.created(
+                    saved,
+                    "Category created successfully"
+            );
+
+        } catch (Exception e) {
+
+            return ApiResponse.internalServerError();
         }
-        return null;
     }
 
-    public void deleteCategory(Long id) {
-        categoryRepository.deleteById(id);
+    public ApiResponse<?> getCategoryById(
+            Long id
+    ) {
+
+        Category category =
+                categoryRepository.findById(id)
+                        .orElse(null);
+
+        if (category == null) {
+
+            return ApiResponse.notFound(
+                    "Category not found"
+            );
+        }
+
+        return ApiResponse.ok(category);
     }
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public ApiResponse<?> updateCategory(
+            Long id,
+            Category updatedCategory
+    ) {
+
+        Category existingCategory =
+                categoryRepository.findById(id)
+                        .orElse(null);
+
+        if (existingCategory == null) {
+
+            return ApiResponse.notFound(
+                    "Category not found"
+            );
+        }
+
+        try {
+
+            existingCategory.setName(
+                    updatedCategory.getName()
+            );
+
+            Category saved =
+                    categoryRepository.save(
+                            existingCategory
+                    );
+
+            return ApiResponse.ok(
+                    saved,
+                    "Category updated successfully"
+            );
+
+        } catch (Exception e) {
+
+            return ApiResponse.internalServerError();
+        }
+    }
+    
+    @Transactional
+    public ApiResponse<?> deleteCategory(
+            Long id
+    ) {
+
+        Category category =
+                categoryRepository.findById(id)
+                        .orElse(null);
+
+        if (category == null) {
+
+            return ApiResponse.notFound(
+                    "Category not found"
+            );
+        }
+
+        try {
+
+            categoryRepository.delete(category);
+
+            return ApiResponse.noContent();
+
+        } catch (Exception e) {
+
+            return ApiResponse.internalServerError();
+        }
+    }
+
+    public ApiResponse<?> getAllCategories() {
+
+        return ApiResponse.ok(
+                categoryRepository.findAll()
+        );
     }
 }

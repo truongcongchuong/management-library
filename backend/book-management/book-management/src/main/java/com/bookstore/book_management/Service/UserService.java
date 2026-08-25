@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.Authentication;
 import com.bookstore.book_management.Dto.ApiResponse;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -24,18 +25,21 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    private final AuthService authService;
+    private final JwtService jwtService;
 
-    public UserService(UserRepository userRepository, AuthService authService) {
+    public UserService(
+        UserRepository userRepository,
+        JwtService jwtService
+    ) {
         this.userRepository = userRepository;
-        this.authService = authService;
+        this.jwtService = jwtService;
     }
 
     public ApiResponse<?> getUserById(Long id, Authentication authentication
     ) {
 
         try {
-            if (authentication != null&& !authService.canAccessUser(authentication, id)) {
+            if (authentication != null&& !jwtService.canAccessUser(authentication, id)) {
 
                 return ApiResponse.forbidden("Access denied");
             }
@@ -59,7 +63,7 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
 
-            return ApiResponse.created(user);
+            return ApiResponse.created(null);
 
         } catch (DataIntegrityViolationException e) {
 
@@ -73,6 +77,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public ApiResponse<?> deleteUser(Long id) {
 
         try {
@@ -94,7 +99,7 @@ public class UserService {
     public ApiResponse<?> updateUser(Long id, User updatedUser, Authentication authentication) {
 
         try {
-            if (!authService.canAccessUser(authentication, id)) {
+            if (!jwtService.canAccessUser(authentication, id)) {
                 return ApiResponse.forbidden("Access denied");
             }
 

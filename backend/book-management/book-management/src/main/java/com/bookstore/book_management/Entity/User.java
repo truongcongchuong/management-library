@@ -14,12 +14,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import jakarta.persistence.Table;
+
 /**
  *
  * @author Admin
  */
 @Entity
-
+@Table(name = "users")
 public class User {
 
     @Id
@@ -33,12 +35,13 @@ public class User {
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
     private String email;
+
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    @NotBlank(message = "Password is required")
-    @Size(min = 6, message = "Password must be at least 6 characters")
     private Role role;
 
     public User() {}

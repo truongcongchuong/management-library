@@ -2,14 +2,12 @@ package com.bookstore.book_management.Service;
 
 import java.time.LocalDateTime;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bookstore.book_management.Dto.ApiResponse;
 import com.bookstore.book_management.Dto.AuthResponse;
-import com.bookstore.book_management.Dto.JwtAccess;
 import com.bookstore.book_management.Dto.LoginRequest;
 import com.bookstore.book_management.Entity.RefreshToken;
 import com.bookstore.book_management.Entity.User;
@@ -64,7 +62,8 @@ public class AuthService {
             refreshTokenService.createRefreshToken(
                     new RefreshToken(
                             refreshToken,
-                            LocalDateTime.now().plusDays(7)
+                            LocalDateTime.now().plusDays(7),
+                            user
                     )
             );
 
@@ -163,8 +162,7 @@ public class AuthService {
                 );
             }
 
-            if (refreshTokenService
-                    .getRefreshTokenByToken(refreshToken) == null) {
+            if (refreshTokenService.getRefreshTokenByToken(refreshToken) == null) {
 
                 return ApiResponse.notFound(
                         "Refresh token not found"
@@ -179,18 +177,8 @@ public class AuthService {
             );
 
         } catch (Exception e) {
-
+                System.out.println(e);
             return ApiResponse.internalServerError();
         }
-    }
-
-    public boolean canAccessUser(Authentication authentication, Long id) {
-
-        JwtAccess jwt = (JwtAccess) authentication.getPrincipal();
-
-        return !(
-                jwt.getRole().equals("USER")
-                && !jwt.getId().equals(id)
-        );
     }
 }

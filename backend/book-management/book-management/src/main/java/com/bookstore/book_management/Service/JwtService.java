@@ -12,9 +12,12 @@ import javax.crypto.SecretKey;
 
 import org.springframework.stereotype.Service;
 
+import com.bookstore.book_management.Dto.JwtAccess;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.Authentication;
 /**
  *
  * @author Admin
@@ -142,4 +145,14 @@ public class JwtService {
                 return false;
         }
     }
+
+        public boolean canAccessUser(Authentication authentication, Long id) {
+
+                JwtAccess jwt = (JwtAccess) authentication.getPrincipal();
+
+                return !(
+                        jwt.getRole().equals("USER")
+                        && !jwt.getId().equals(id)
+                );
+        }
 }

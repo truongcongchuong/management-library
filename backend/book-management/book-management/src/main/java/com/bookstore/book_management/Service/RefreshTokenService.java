@@ -8,6 +8,7 @@ package com.bookstore.book_management.Service;
 import org.springframework.stereotype.Service;
 import com.bookstore.book_management.Repository.RefreshTokenRepository;
 import com.bookstore.book_management.Entity.RefreshToken;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -36,7 +37,8 @@ public class RefreshTokenService {
     public void deleteRefreshTokensByUserId(Long userId) {
         refreshTokenRepository.findByUserId(userId).forEach(refreshTokenRepository::delete);
     }
-
+    
+    @Transactional
     public void logout(String token) {
         refreshTokenRepository.deleteByToken(token);
     }

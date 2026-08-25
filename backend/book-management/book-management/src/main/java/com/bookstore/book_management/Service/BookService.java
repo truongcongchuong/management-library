@@ -6,6 +6,7 @@
 package com.bookstore.book_management.Service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstore.book_management.Dto.ApiResponse;
 import com.bookstore.book_management.Entity.Book;
@@ -50,7 +51,7 @@ public class BookService {
     public ApiResponse<?> createBook(Book book) {
         try {
 
-            if (!repository.existsByIsbn(book.getIsbn())) {
+            if (repository.existsByIsbn(book.getIsbn())) {
                 return ApiResponse.conflict("ISBN already exists");
             }
 
@@ -95,6 +96,7 @@ public class BookService {
         
     }
 
+    @Transactional
     public ApiResponse<?> deleteBook(Long id) {
 
         try { 
@@ -123,7 +125,6 @@ public class BookService {
 
     public ApiResponse<?> findByTitleContainingIgnoreCase(String title) {
          try {
-
             return ApiResponse.ok(repository.findByTitleContainingIgnoreCase(title));
         } catch (Exception e) {
             return ApiResponse.internalServerError();

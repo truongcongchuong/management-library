@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 /**
  *
  * @author Admin
@@ -26,12 +27,16 @@ public class RefreshToken {
 
     private LocalDateTime expiryDate;
 
+    @ManyToOne
+    private User user;
+
     public RefreshToken() {
     }
 
-    public RefreshToken(String token, LocalDateTime expiryDate) {
+    public RefreshToken(String token, LocalDateTime expiryDate, User user) {
         this.token = token;
         this.expiryDate = expiryDate;
+        this.user = user;
     }
 
     // Getters and setters
@@ -57,5 +62,13 @@ public class RefreshToken {
 
     public void setExpiryDate(LocalDateTime expiryDate) {
         this.expiryDate = expiryDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User newUser) {
+        this.user = newUser;
     }
 }

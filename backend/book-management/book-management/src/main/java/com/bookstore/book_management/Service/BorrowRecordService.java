@@ -9,90 +9,241 @@ package com.bookstore.book_management.Service;
  *
  * @author Admin
  */
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.bookstore.book_management.Dto.ApiResponse;
 import com.bookstore.book_management.Entity.BorrowRecord;
 import com.bookstore.book_management.Repository.BorrowRecordRepository;
 
 @Service
 public class BorrowRecordService {
     private final BorrowRecordRepository borrowRecordRepository;
-    private final AuthService authService;
 
-    public BorrowRecordService(BorrowRecordRepository borrowRecordRepository, AuthService authService) {
+    private final JwtService jwtService;
+
+    public BorrowRecordService(
+        BorrowRecordRepository borrowRecordRepository,
+        JwtService jwtService
+    ) {
         this.borrowRecordRepository = borrowRecordRepository;
-        this.authService = authService;
+        this.jwtService = jwtService;
     }
 
-    public BorrowRecord createBorrowRecord(BorrowRecord borrowRecord) {
-        return borrowRecordRepository.save(borrowRecord);
+    public ApiResponse<?> createBorrowRecord(BorrowRecord borrowRecord) {
+        try {
+
+            borrowRecordRepository.save(borrowRecord);
+            return ApiResponse.created(null);
+
+
+        } catch (Exception e) {
+            return ApiResponse.internalServerError();
+        }
     }
 
-    public BorrowRecord getBorrowRecordById(Long id, Authentication authentication) {
+    public ApiResponse<?> getBorrowRecordById(
+            Long id,
+            Authentication authentication
+    ) {
 
-        BorrowRecord borrowRecord = borrowRecordRepository.findById(id).orElse(null);
+        BorrowRecord borrowRecord =
+                borrowRecordRepository
+                        .findById(id)
+                        .orElse(null);
 
-        if (borrowRecord != null) {
-            if(!authService.canAccessUser(authentication, borrowRecord.getUser().getId())) {
-                return null;
-            }
+        if (borrowRecord == null) {
+            return ApiResponse.notFound(
+                    "Borrow record not found"
+            );
         }
 
-        return borrowRecord;
-    }
+        if (!jwtService.canAccessUser(
+                authentication,
+                borrowRecord.getUser().getId()
+        )) {
 
-    public BorrowRecord updateBorrowRecord(Long id, BorrowRecord updatedBorrowRecord) {
-        BorrowRecord existingBorrowRecord = borrowRecordRepository.findById(id).orElse(null);
-        if (existingBorrowRecord != null) {
-            existingBorrowRecord.setUser(updatedBorrowRecord.getUser());
-            existingBorrowRecord.setBook(updatedBorrowRecord.getBook());
-            existingBorrowRecord.setBorrowDate(updatedBorrowRecord.getBorrowDate());
-            existingBorrowRecord.setReturnDate(updatedBorrowRecord.getReturnDate());
-
-            return borrowRecordRepository.save(existingBorrowRecord);
+            return ApiResponse.forbidden(
+                    "Access denied"
+            );
         }
-        return null;
+
+        return ApiResponse.ok(borrowRecord);
     }
 
-    public void deleteBorrowRecord(Long id) {
-        borrowRecordRepository.deleteById(id);
-    }
+    public ApiResponse<?> updateBorrowRecord(
+            Long id,
+            BorrowRecord updatedBorrowRecord
+    ) {
 
-    public List<BorrowRecord> getAllBorrowRecords() {
-        return borrowRecordRepository.findAll();
-    }
+        BorrowRecord existingBorrowRecord =
+                borrowRecordRepository
+                        .findById(id)
+                        .orElse(null);
 
-    public List<BorrowRecord> getBorrowRecordsByUserId(Long userId, Authentication authentication) {
+        if (existingBorrowRecord == null) {
 
-            if(!authService.canAccessUser(authentication, userId)) {
-                return null;
-            }
-        return borrowRecordRepository.findByUserId(userId);
-    }
-
-    public List<BorrowRecord> getBorrowRecordsByBookId(Long bookId) {
-        return borrowRecordRepository.findByBookId(bookId);
-    }
-
-    public List<BorrowRecord> getBorrowRecordsByUserIdAndBookId(Long userId, Long bookId, Authentication authentication) {
-
-        if(!authService.canAccessUser(authentication, userId)) {
-            return null;
+            return ApiResponse.notFound(
+                    "Borrow record not found"
+            );
         }
-        
-        return borrowRecordRepository.findByUserIdAndBookId(userId, bookId);
+
+        try {
+
+            existingBorrowRecord.setUser(
+                    updatedBorrowRecord.getUser()
+            );
+
+            existingBorrowRecord.setBook(
+                    updatedBorrowRecord.getBook()
+            );
+
+            existingBorrowRecord.setBorrowDate(
+                    updatedBorrowRecord.getBorrowDate()
+            );
+
+            existingBorrowRecord.setReturnDate(
+                    updatedBorrowRecord.getReturnDate()
+            );
+
+            BorrowRecord saved = borrowRecordRepository.save(existingBorrowRecord);
+
+            return ApiResponse.ok(
+                    saved,
+                    "Borrow record updated successfully"
+            );
+
+        } catch (Exception e) {
+
+            return ApiResponse.internalServerError();
+        }
     }
 
-    public boolean setReturnDate(Long borrowRecordId, LocalDate returnDate) {
-        BorrowRecord borrowRecord = borrowRecordRepository.findById(borrowRecordId).orElse(null);
-        if (borrowRecord != null) {
-            borrowRecordRepository.setReturnDate(borrowRecordId, returnDate);
-            return true;
+    @Transactional
+    public ApiResponse<?> deleteBorrowRecord(Long id) {
+
+        BorrowRecord borrowRecord =
+                borrowRecordRepository
+                        .findById(id)
+                        .orElse(null);
+
+        if (borrowRecord == null) {
+
+            return ApiResponse.notFound(
+                    "Borrow record not found"
+            );
         }
-        return false;
+
+        try {
+
+            borrowRecordRepository.delete(
+                    borrowRecord
+            );
+
+            return ApiResponse.noContent();
+
+        } catch (Exception e) {
+
+            return ApiResponse.internalServerError();
+        }
+    }
+
+    public ApiResponse<?> getAllBorrowRecords() {
+
+        return ApiResponse.ok(
+                borrowRecordRepository.findAll()
+        );
+    }
+
+    public ApiResponse<?> getBorrowRecordsByBookId(
+            Long bookId
+    ) {
+
+        return ApiResponse.ok(
+                borrowRecordRepository
+                        .findByBookId(bookId)
+        );
+    }
+
+    public ApiResponse<?> getBorrowRecordsByUserId(
+        Long userId,
+        Authentication authentication
+    ) {
+
+        if (!jwtService.canAccessUser(
+                authentication,
+                userId
+        )) {
+
+            return ApiResponse.forbidden(
+                    "Access denied"
+            );
+        }
+
+        return ApiResponse.ok(
+                borrowRecordRepository
+                        .findByUserId(userId)
+        );
+    }
+
+    public ApiResponse<?> getBorrowRecordsByUserIdAndBookId(
+            Long userId,
+            Long bookId,
+            Authentication authentication
+    ) {
+
+        if (!jwtService.canAccessUser(
+                authentication,
+                userId
+        )) {
+
+            return ApiResponse.forbidden(
+                    "Access denied"
+            );
+        }
+
+        return ApiResponse.ok(
+                borrowRecordRepository
+                        .findByUserIdAndBookId(
+                                userId,
+                                bookId
+                        )
+        );
+    }
+
+    public ApiResponse<?> setReturnDate(
+            Long borrowRecordId,
+            LocalDateTime returnDate
+    ) {
+
+        BorrowRecord borrowRecord =
+                borrowRecordRepository
+                        .findById(borrowRecordId)
+                        .orElse(null);
+
+        if (borrowRecord == null) {
+
+            return ApiResponse.notFound(
+                    "Borrow record not found"
+            );
+        }
+
+        try {
+
+            borrowRecord.setReturnDate(returnDate);
+            borrowRecordRepository.save(borrowRecord);
+
+            return ApiResponse.ok(
+                    null,
+                    "Return date updated successfully"
+            );
+
+        } catch (Exception e) {
+
+            return ApiResponse.internalServerError();
+        }
     }
 }
