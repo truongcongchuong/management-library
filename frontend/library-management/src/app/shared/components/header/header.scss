@@ -1,0 +1,66 @@
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins' as m;
+@use 'base/typography' as t;
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: calc(v.$sidebar-width + 30px);
+    width: calc(100% - v.$sidebar-width - 80px);
+    height: 6%;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--surface);
+    align-items: center;
+    padding: 0 20px;
+    border: 1px solid var(--border);
+    
+    .search-box {
+        border: 1px solid var(--border);
+        border-radius: v.$radius;
+        width: 25%;
+        display: flex;
+        align-items: center;
+        padding: 2px 20px;
+
+        input {
+            width: 87%;
+            height: 30px;
+            border: none;
+            margin-left: 10px;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        svg {
+            height: 22px;
+            width: 22px;
+            color: var(--ink-faint)
+        }
+    }
+
+    .top-actions {
+        display: flex;
+        .item {
+            margin: 0 10px;
+            border: 1px solid var(--border);
+            border-radius: v.$radius;
+            height: 38px;
+            width: 38px;
+            background: transparent;
+
+            svg {
+                height: v.$icon-sm;
+                width: v.$icon-sm;
+                color: var(--ink-soft);
+            }
+        }
+
+        .avatar {
+            @include m.avatar;
+        }
+
+    }
+}

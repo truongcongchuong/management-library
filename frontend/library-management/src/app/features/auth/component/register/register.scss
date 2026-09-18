@@ -1,0 +1,95 @@
+@use 'abstracts/variables' as v;
+@use 'base/typography' as t;
+
+
+:host {
+    width: 50%;
+    height: 70%;
+    padding: v.$padding-content;
+}
+
+.form-register {
+    p {
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: v.$fs-panel-title;
+        font-weight: v.$fw-medium;
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+    }
+    h1 {
+        margin: 0;
+    }
+
+    .form-group {
+        margin: 20px 0;
+        width: 100%;
+        input {
+            width: 94%;
+            border-radius: v.$radius;
+            padding: v.$padding-input;
+            margin-top: 5px;
+            border: 1px solid var(--border);
+            font-size: v.$fs-input;
+            outline: none;
+
+            &:focus {
+                border-color: var(--primary);
+            }
+        }
+
+        p {
+            font-size: v.$fs-feat-title;
+            font-weight: v.$fw-bold;
+        }
+    }
+
+        form {
+        margin-top: 60px;
+        align-self: stretch;
+
+        button {
+            margin: auto;
+            width: 100%;
+            height: 45px;
+            border-radius: v.$radius;
+            border: none;
+            background-color: var(--primary);
+            color: var(--primary-light);
+            font-family: t.$font-body ;
+            font-size: v.$fs-button;
+            font-weight: v.$fw-bold;
+        }
+    }
+
+    .password-strength {
+
+        margin-top: 8px;
+
+        .strength-bars {
+            display: flex;
+            gap: 4px;
+        }
+
+        .bar {
+            flex: 1;
+            height: 4px;
+            background: var(--primary-light);
+            border-radius: 999px;
+            transition: 0.3s;
+        }
+
+        .bar.active {
+            background: #2952E3;
+        }
+
+        p {
+            margin-top: 6px;
+            font-size: 12px;
+            color: var(--ink-soft);
+        }
+    }
+}

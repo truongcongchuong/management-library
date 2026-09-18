@@ -1,0 +1,12 @@
+// chứa hàm scss tự tạo
+
+// ví dụ:
+// @function rem($px) {
+//   @return calc($px / 16) * 1rem;
+// }
+
+
+// Truy cập nhanh trong SCSS lúc build (VD: darken/lighten thủ công nếu cần)
+// Cách dùng: color-l('primary')  |  color-d('primary')
+@function color-l($key) { @return map-get($colors-light, $key); }
+@function color-d($key) { @return map-get($colors-dark, $key); }

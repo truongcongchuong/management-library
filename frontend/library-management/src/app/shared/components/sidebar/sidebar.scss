@@ -1,0 +1,113 @@
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins' as m;
+@use 'base/typography' as t;
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: v.$sidebar-width;
+    height: 95%;
+    padding: v.$padding-sidebar;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--surface);
+    border-right: 1px solid var(--border);
+    .nav-brand {
+        display: flex;
+        align-items: center;
+
+        .logo {
+
+            @include m.box-logo;
+            svg {
+                @include m.svg-logo;
+            }
+        }
+
+        .brand-name {
+            @include m.font-family-brand;
+            a {
+                @include m.brand-name;
+            }
+            p {
+                @include m.name-app;
+            }
+        }
+    }
+
+    nav {
+        margin-top: 50px;
+        width: v.$sidebar-width - 22px;
+        svg {
+            height: 20px;
+            width: 20px;
+        }
+
+        .nav-group-label {
+            font-family: t.$font-body;
+            font-weight: v.$fw-bold;
+            color: var(--ink-faint);
+            font-size: v.$fs-nav-group-label;
+            margin: 8px 16px;
+        }
+
+        .nav-item {
+            border: none;
+            border-radius: v.$radius;
+            width: 100%;
+            text-align: left;
+            height: 40px;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: var(--ink-soft);
+            padding: v.$padding-button;
+            font-family: t.$font-body;
+        }
+
+        .nav-item:not(.active):hover {
+            background-color: var(--bg);
+            color: var(--ink);
+        }
+
+        .active {
+            background-color: var(--primary-light);
+            color: var(--primary)
+        }
+    }
+
+    .sidebar-foot {
+        display: flex;
+        margin-top: auto;
+        width: v.$sidebar-width;
+        border-top: 1px solid var(--border);
+        padding: 20px 0 0 0;
+
+        .avatar {
+            @include m.avatar;
+        }
+
+        .foot-name {
+            color: var(--ink);
+        }
+        .foot-role {
+            font-size: 13px;
+            color: var(--ink-faint);
+        }
+        .mini-btn {
+            width: 30px;
+            height: 30px;
+            font-size: v.$fs-button;
+            background-color: transparent;
+            border: 1px solid var(--border);
+            border-radius: v.$radius;
+            color: var(--ink-soft);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+    
+}

@@ -1,0 +1,75 @@
+@use 'abstracts/variables' as v;
+@use 'base/typography' as t;
+
+.container {
+  display: flex;
+  height: calc(100vh - 80px);;
+}
+
+header {
+    background: v.$gradient-bar;
+    color: white;
+    width: 50%;
+    padding: v.$padding-cta-banner;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    .banner {
+        width: 50%;
+        font-size: v.$fs-cta-title;
+    }
+
+    .name-app {
+        font-family: t.$font-display;
+        font-size: v.$fs-brand-name;
+        font-weight: v.$fw-bold;
+    }
+    .stats {
+        display: flex;
+        justify-content: space-between;
+        width: 40%;
+        font-family: t.$font-mono;
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            p {
+                margin:0;
+            }
+            .stat-number {
+                font-size: v.$fs-stat-val;
+                font-weight: v.$fw-bold;
+            }
+
+            .stat-label {
+                font-size: v.$fs-panel-title;
+            }
+        }
+    }
+
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    left: -70px;
+    bottom: -70px;
+}
+
+
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    font-family: t.$font-display;
+}

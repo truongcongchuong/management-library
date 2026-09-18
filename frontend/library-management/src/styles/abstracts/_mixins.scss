@@ -1,0 +1,182 @@
+// chứa các đoạn css dùng lại nhiều lần
+// ví dụ:
+// @mixin flex-center {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+@use './variables' as v;
+@use '../base/typography' as t;
+
+@mixin emit-theme($map) {
+  @each $key, $value in $map {
+    --#{$key}: #{$value};
+  }
+}
+
+@mixin box-logo {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+  border-radius: v.$radius-lg;
+  background: var(--primary);
+  color: var(--surface);
+}
+
+@mixin font-family-brand {
+  font-family: t.$font-display;
+}
+@mixin svg-logo {
+  width: v.$icon-lg;
+  height: v.$icon-lg;
+}
+
+@mixin brand-name {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: v.$fs-brand-name;
+  font-weight: v.$fw-bold;
+}
+
+@mixin name-app {
+  margin: 0;
+  font-size: v.$fs-brand-sub;
+  font-weight: v.$fw-medium;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  line-height: 1.2;
+}
+
+
+@mixin avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 38px;
+  width: 38px;
+  background: v.$gradient-avatar;
+  border-radius: v.$radius-full;
+  color: var(--surface);
+  font-size: 12px;
+  font-weight: v.$fw-bold;
+  margin-right: 10px;
+}
+
+@mixin box-page-head {
+  margin-bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin page-head-title {
+  font-size: v.$fs-page-title;
+  font-weight: v.$fw-bold;
+  color: var(--ink);
+}
+
+@mixin page-head-desc {
+  font-size: v.$fs-page-desc;
+  font-weight: v.$fw-medium;
+  color: var(--ink-soft);
+}
+
+@mixin svg-head-page {
+  height: 20px;
+  width: 20px;
+  margin-right: 5px
+}
+
+
+@mixin btn {
+  font-family: t.$font-body;
+  font-size: v.$fs-button;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: v.$padding-button;
+  border-radius: v.$radius;
+  border: none;
+}
+
+@mixin btn-primary {
+  background: var(--primary);
+  color: var(--surface)
+}
+
+
+// css bảng
+
+@mixin table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: v.$radius-lg;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+@mixin table-style {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: v.$radius-lg;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    padding: 12px 16px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-faint);
+    font-size: v.$fs-table-header;
+    font-weight: v.$fw-bold;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  td {
+    padding: v.$padding-table-cell;
+    border-bottom: 1px solid var(--border);
+    font-size: v.$fs-table-cell;
+    vertical-align: middle;
+    font-weight: v.$fw-medium;
+    text-align: center;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: var(--surface-2);
+  }
+}
+
+@mixin mini-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: v.$radius-sm;
+  background: var(--surface);
+  color: var(--ink-soft);
+
+  svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  &:hover {
+    background: var(--neutral-bg);
+  }
+}

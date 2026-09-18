@@ -1,0 +1,115 @@
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins' as m;
+@use 'base/typography' as t;
+
+.table-wrap {
+  @include m.table-style;
+}
+
+.cell-user {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.cell-name {
+  font-weight: v.$fw-semibold;
+}
+
+.cell-sub {
+  font-size: v.$fs-cell-sub;
+  color: var(--ink-faint);
+}
+
+.row-actions {
+  display: flex;
+
+  gap: 6px;
+}
+
+.mini-btn {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--border);
+  border-radius: v.$radius-sm;
+
+  background: var(--surface);
+  color: var(--ink-soft);
+
+  &:hover {
+    background: var(--neutral-bg);
+  }
+
+  svg {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: v.$fw-bold;
+
+  color: var(--ink-soft);
+}
+
+.panel {
+    
+    padding: 20px;
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: v.$radius-lg;
+
+    box-shadow: var(--shadow);
+
+    &-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 16px;
+    }
+
+    &-title {
+        font-size: 14.5px;
+        font-weight: v.$fw-bold;
+    }
+
+    &-sub {
+        font-size: 11.5px;
+        color: var(--ink-faint);
+    }
+}
+
+.link-sm {
+  font-size: 15px;
+  font-weight: v.$fw-semibold;
+
+  color: var(--primary);
+  text-decoration: none;
+}
+
+td {
+    font-weight: v.$fw-bold;
+    font-size: 14px;
+    color: var(--ink-soft);
+}
+
+.panel-title {
+    font-size: v.$fs-panel-title;
+}
+
+.badge-danger {
+    background-color: var(--danger-bg);
+    color: var(--danger);
+    padding: 5px;
+    border-radius: v.$radius;
+}

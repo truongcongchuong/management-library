@@ -1,0 +1,147 @@
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins' as m;
+@use 'base/typography' as t;
+
+
+:host {
+    width: 70%;
+}
+
+.page-head {
+  @include m.box-page-head;
+
+  .page-title {
+    @include m.page-head-title;
+  }
+
+  .page-head-desc {
+    @include m.page-head-desc;
+  }
+
+  svg {
+    @include m.svg-head-page;
+  }
+
+  .btn {
+    @include m.btn;
+  }
+
+  .btn-primary {
+    @include m.btn-primary;
+  }
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+
+  .select {
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+
+  .view-toggle {
+    display: flex;
+    margin-left: auto;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    overflow: hidden;
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      background: var(--surface);
+      color: var(--ink-faint);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .active {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+  }
+}
+
+.table-wrap{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: v.$radius-lg;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+
+  @include m.table-style;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: var(--surface-2);
+}
+
+.cell-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cell-name {
+  font-weight: v.$fw-semibold;
+  text-align: left;
+}
+
+.cell-sub {
+  font-size: v.$fs-cell-sub;
+  color: var(--ink-faint);
+}
+
+.row-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.mini-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: v.$radius-sm;
+  background: var(--surface);
+  color: var(--ink-soft);
+
+  svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  &:hover {
+    background: var(--neutral-bg);
+  }
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+
+.spine-tag {
+    width: 70px;
+    height: 70px;
+}
+
+.avatar {
+    @include m.avatar;
+}

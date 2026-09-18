@@ -1,0 +1,88 @@
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins' as m;
+@use 'base/typography' as t;
+
+nav {
+    background-color: var(--dg);
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+    align-items: center;
+    padding: 0 30px;
+    box-shadow: v.$shadow-light;
+    margin: 0;
+
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        .logo {
+            @include m.box-logo;
+            svg {
+               @include m.svg-logo;
+            }
+        }
+
+        .brand-name {
+            @include m.font-family-brand;
+            a {
+                @include m.brand-name;
+            }
+            p {
+               @include m.name-app;
+            }
+        }
+    }
+
+    .nav-menu {
+        a {
+            font-family: t.$font-body;
+            color: var(--ink-faint);
+            text-decoration: none;
+            font-size: v.$fs-nav-item;
+            font-weight: v.$fw-semibold;
+            padding: v.$padding-sidebar;
+            border-radius: v.$radius;
+            transition: background-color 0.2s ease-in-out;
+
+            &:hover {
+                color: var(--ink-soft);
+            }
+        }
+    }
+
+    .nav-actions {
+        button {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--ink-faint);
+            font-size: v.$fs-nav-item;
+            padding: v.$padding-button;
+            font-weight: v.$fw-semibold;
+            border-radius: v.$radius;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: background-color 0.2s ease-in-out;
+
+            &:hover {
+                color: var(--ink-soft);
+            }
+        }
+
+        .btn-theme {
+            color: var(--ink);
+        }
+        .btn-login {
+
+            color: var(--ink);
+        }
+        .btn-register {
+            background: var(--primary);
+            color: var(--surface);
+
+            &:hover {
+                background: var(--primary-dark);
+                color: var(--surface);
+            }
+        }
+    }
+}

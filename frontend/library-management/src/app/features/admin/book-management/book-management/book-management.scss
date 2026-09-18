@@ -1,0 +1,82 @@
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins' as m;
+@use 'base/typography' as t;
+
+:host {
+  width: 70%;
+}
+
+#admin-book {
+  width: 100%;
+}
+
+// Head
+.page-head {
+  @include m.box-page-head;
+
+  .page-title {
+    @include m.page-head-title;
+  }
+
+  .page-head-desc {
+    @include m.page-head-desc;
+  }
+
+  svg {
+    @include m.svg-head-page;
+  }
+
+  .btn {
+    @include m.btn;
+  }
+
+  .btn-primary {
+    @include m.btn-primary;
+  }
+}
+
+// Toolbar
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+
+  .select {
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+
+  .view-toggle {
+    display: flex;
+    margin-left: auto;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    overflow: hidden;
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      background: var(--surface);
+      color: var(--ink-faint);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .active {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+  }
+}
+
+// Card book
+.book-grid {
+  width: 100%;
+}

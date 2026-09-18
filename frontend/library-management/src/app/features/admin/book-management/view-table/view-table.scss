@@ -1,0 +1,45 @@
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins' as m;
+@use 'base/typography' as t;
+
+
+:host {
+    @include m.table-style;
+}
+
+
+
+.cell-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cell-name {
+  font-weight: v.$fw-semibold;
+}
+
+.cell-sub {
+  font-size: v.$fs-cell-sub;
+  color: var(--ink-faint);
+}
+
+.row-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.mini-btn {
+  @include m.mini-button;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+
+.spine-tag {
+    width: 70px;
+    height: 70px;
+}

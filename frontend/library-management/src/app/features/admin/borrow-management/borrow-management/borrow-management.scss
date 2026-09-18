@@ -1,0 +1,72 @@
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins' as m;
+@use 'base/typography' as t;
+
+
+:host {
+    width: 70%;
+}
+
+.page-head {
+  @include m.box-page-head;
+
+  .page-title {
+    @include m.page-head-title;
+  }
+
+  .page-head-desc {
+    @include m.page-head-desc;
+  }
+
+  svg {
+    @include m.svg-head-page;
+  }
+
+  .btn {
+    @include m.btn;
+  }
+
+  .btn-primary {
+    @include m.btn-primary;
+  }
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+
+    .genre-chip{
+        padding:8px 16px;
+        border-radius:20px;
+        border:1px solid var(--border);
+        background:var(--surface);
+        font-size:12.5px;
+        font-weight:600;
+        color:var(--ink-soft);
+        .active{
+            background:var(--primary);
+            border-color:var(--primary);
+            color:#fff;
+        }
+    }
+
+    .active {
+        background-color: var(--primary);
+        color: var(--surface);
+    }
+}
+
+.table-wrap {
+    @include m.table-style;
+}
+
+.row-actions {
+    display: flex;
+}
+.mini-btn {
+    margin: 0 5px;
+    @include m.mini-button;
+}

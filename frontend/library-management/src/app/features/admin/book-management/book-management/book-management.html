@@ -1,0 +1,50 @@
+<section class="view" id="admin-books">
+  <div class="page-head">
+    <div>
+      <div class="page-title">Quản lý sách</div>
+      <div class="page-desc">12,480 đầu sách trong danh mục</div>
+    </div>
+
+    <button class="btn btn-primary" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path d="M12 5v14M5 12h14" />
+      </svg>
+      Thêm sách
+    </button>
+  </div>
+
+  <div class="toolbar">
+    <select class="select">
+      <option>Tất cả thể loại</option>
+      <option>Văn học</option>
+      <option>Kỹ năng sống</option>
+      <option>Khoa học</option>
+      <option>Lịch sử</option>
+    </select>
+
+    <select class="select">
+      <option>Tất cả tác giả</option>
+      <option>Paulo Coelho</option>
+      <option>Yuval Noah Harari</option>
+    </select>
+
+    <select class="select">
+      <option>Tất cả trạng thái</option>
+      <option>Còn sách</option>
+      <option>Hết sách</option>
+    </select>
+
+    <div class="view-toggle">
+      <button [class.active]="isCardBook == true" (click)="viewToggle(true)">Card</button>
+      <button [class.active]="isCardBook == false" (click)="viewToggle(false)">Bảng</button>
+    </div>
+  </div>
+
+  <div class="book-grid" id="bookCardView" [style.display]="isCardBook ? 'grid' : 'none'">
+    <app-view-card></app-view-card>
+  </div>
+
+  <div class="table-wrap" id="bookTableView" [style.display]="isCardBook ? 'none' : 'block'">
+    <app-view-table></app-view-table>
+  </div>
+</section>

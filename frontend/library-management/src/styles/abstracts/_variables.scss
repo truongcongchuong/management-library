@@ -1,0 +1,231 @@
+// chứa các biến dùng chung cho toàn bộ project
+
+// =========================================================
+// LibraOS — Design Tokens (SCSS)
+// Import file này đầu tiên trong styles.scss:
+//   @use 'tokens' as *;
+// hoặc (Sass cũ hơn):
+//   @import 'tokens';
+//
+// File gồm 2 phần:
+//  A. Biến SCSS thuần (spacing, radius, typography, motion, z-index...)
+//     — dùng trực tiếp lúc biên dịch, không đổi được lúc runtime.
+//  B. Map màu SCSS ($colors-light / $colors-dark) + mixin xuất ra
+//     CSS Custom Properties (--primary, --bg...) để đổi Light/Dark
+//     ngay trong trình duyệt bằng [data-theme="dark"] mà không cần
+//     build lại CSS.
+// =========================================================
+
+
+// Cỡ chữ theo từng vai trò UI (không phải thang tuyến tính, đặt theo ngữ cảnh dùng)
+$fs-hero-title:        48px; // Landing hero title
+$fs-page-title:        26px; // .page-title (Fraunces)
+$fs-hero-title-dash:   32px; // .hero-title trong Dashboard/User home (Fraunces)
+$fs-cta-desc:          16px;
+$fs-cta-title:         26px; // CTA banner title
+$fs-section-title:     30px; // Landing section title
+$fs-section-title-sm:  19px; // .section-title trong app
+$fs-modal-title:       17px;
+$fs-brand-name:        19px;
+$fs-brand-sub:         11px;
+$fs-stat-val:          25px;
+$fs-donut-center:      16px;
+$fs-panel-title:       19px;
+$fs-feat-title:        14.5px;
+$fs-step-title:        14.5px;
+$fs-body-desc:         13.5px; // mô tả sách, paragraph
+$fs-page-desc:         13px;
+$fs-auth-form-title:   26px;
+$fs-nav-item:          13.5px;
+$fs-button:            13px;
+$fs-book-title:        16px;
+$fs-input:             13px;
+$fs-field-label:       14px;
+$fs-genre-chip:        12.5px;
+$fs-pub-nav-link:      13.5px;
+$fs-table-cell:        14.5px;
+$fs-book-author:       11.5px;
+$fs-cell-sub:          11px;
+$fs-badge:             20px;
+$fs-stat-delta:        14px;
+$fs-eyebrow:           11.5px;
+$fs-table-header:      10.5px;
+$fs-nav-group-label:   13px;
+$fs-call-no:           10px;
+
+// Font-weight
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
+$fw-bold: 700;
+
+// Line-height
+$lh-tight: 1.15;
+$lh-snug: 1.2;
+$lh-base: 1.3;
+$lh-relaxed: 1.6;
+$lh-loose: 1.7;
+
+
+// ============ B. SPACING SCALE ============
+$space-1: 4px;
+$space-2: 6px;
+$space-3: 8px;
+$space-4: 10px;
+$space-5: 12px;
+$space-6: 14px;
+$space-7: 16px;
+$space-8: 18px;
+$space-9: 20px;
+$space-10: 22px;
+$space-11: 26px;
+
+// Padding cụ thể hay dùng lại (giữ nguyên literal để tránh nhầm khi đọc component spec)
+$padding-sidebar: 22px 16px;
+$padding-content: 26px;
+$padding-panel: 20px;
+$padding-stat-card: 17px 18px;
+$padding-button: 10px 16px;
+$padding-input: 10px 12px;
+$padding-table-cell: 12px 16px;
+$padding-modal-head: 18px 22px;
+$padding-modal-body: 20px 22px;
+$padding-modal-foot: 16px 22px;
+$padding-pub-hero: 76px 40px 60px;
+$padding-pub-section: 70px 40px;
+$padding-cta-banner: 52px 50px;
+$padding-auth-visual: 56px;
+
+
+// ============ C. RADIUS SCALE ============
+$radius-sm: 7px;    // mini-button (icon action trong bảng)
+$radius:    9px;        // input, button, select, nav-item, stat-icon
+$radius-md: 12px;    // book-card
+$radius-lg: 14px;    // card, panel, table-wrap (mặc định)
+$radius-xl: 16px;    // modal, feature-card
+$radius-2xl: 18px;   // hero (dashboard)
+$radius-3xl: 22px;   // CTA banner (landing)
+$radius-pill: 20px;  // badge, chip
+$radius-full: 50%;   // avatar, donut
+
+
+// ============ D. SHADOW ============
+$shadow-light: 0 1px 2px rgba(16,25,43,.04), 0 8px 24px -12px rgba(16,25,43,.10);
+$shadow-dark:  0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+$shadow-modal: 0 24px 60px -20px rgba(0,0,0,.35);
+$shadow-float: 0 10px 30px -8px rgba(0,0,0,.25);
+
+
+// ============ E. MOTION ============
+$ease-fast: .15s ease;   // hover màu nền/viền
+$ease-base: .2s ease;    // sidebar mobile trượt
+$ease-fade: .25s ease;   // chuyển view (fade-in + dịch lên 4px)
+
+
+// ============ F. Z-INDEX ============
+$z-topbar: 10;
+$z-navbar-public: 20;
+$z-sidebar-mobile: 40;
+$z-modal: 50;
+$z-float-widget: 100;
+
+
+// ============ G. LAYOUT CONSTANTS ============
+$sidebar-width: 250px;
+$topbar-height: 64px;
+$pub-navbar-height: 72px;
+$content-max-width: 1280px;
+$search-box-width: 340px;
+$modal-width: 480px;
+$auth-form-max-width: 380px;
+
+// Breakpoints
+$bp-tablet: 1100px;
+$bp-mobile: 760px;
+$bp-auth-stack: 900px;
+
+
+// ============ H. ICON SIZE ============
+$icon-xs: 13px;   // action icon trong bảng
+$icon-sm: 14px;   // icon trong button
+$icon-md: 15px;   // search icon
+$icon-lg: 16px;   // stat-icon, topbar icon
+$icon-xl: 17px;   // nav item icon
+$icon-2xl: 20px;  // feature icon (landing)
+$icon-container-sm: 32px; // stat-icon, avatar topbar
+$icon-container-md: 34px; // brand-mark, avatar sidebar
+$icon-container-lg: 42px; // feat-icon (landing)
+
+
+// =========================================================
+// I. COLOR MAPS — nguồn màu duy nhất (Single Source of Truth)
+// =========================================================
+$colors-light: (
+  bg:            #F5F7FB,
+  surface:       #FFFFFF,
+  surface-2:     #FBFCFE,
+  ink:           #10192B,
+  ink-soft:      #5B6478,
+  ink-faint:     #8E97AC,
+  border:        #E5E9F1,
+
+  primary:       #2952E3,
+  primary-dark:  #1B3BC2,
+  primary-light: #E9EEFF,
+
+  success:       #1FAA6D,
+  success-bg:    #E7F8F0,
+  warning:       #E8963D,
+  warning-bg:    #FDF1E2,
+  danger:        #E14B4B,
+  danger-bg:     #FCEAEA,
+  neutral:       #94A0B8,
+  neutral-bg:    #EEF1F6,
+);
+
+$colors-dark: (
+  bg:            #0D1320,
+  surface:       #141B2B,
+  surface-2:     #101725,
+  ink:           #EDF1FA,
+  ink-soft:      #9AA4BE,
+  ink-faint:     #6B7690,
+  border:        #232C40,
+
+  primary:       #5B7FFF,
+  primary-dark:  #7B99FF, // sắc SÁNG hơn trong dark mode (hover/gradient)
+  primary-light: #1A2547,
+
+  success:       #3FCC93,
+  success-bg:    #12291F,
+  warning:       #F0A94E,
+  warning-bg:    #2E2312,
+  danger:        #F0685F,
+  danger-bg:     #301616,
+  neutral:       #7C88A3,
+  neutral-bg:    #1B2233,
+);
+
+
+// =========================================================
+// K. GRADIENT — build từ CSS custom properties ở trên nên
+// tự đổi màu đúng theo theme hiện tại, không cần khai báo lại.
+// =========================================================
+$gradient-brand:         linear-gradient(155deg, var(--primary), #1B3BC2);
+$gradient-brand-steep:   linear-gradient(165deg, var(--primary), #132C99);
+$gradient-avatar:        linear-gradient(135deg, var(--primary), #7B9CFF);
+$gradient-bar:           linear-gradient(180deg, var(--primary), var(--primary-dark));
+$gradient-bar-highlight: linear-gradient(180deg, var(--primary-dark), var(--primary));
+$gradient-cover:         linear-gradient(155deg, var(--primary-light), var(--neutral-bg));
+$gradient-donut:         conic-gradient(var(--primary) 0% 68%, var(--warning) 68% 88%, var(--neutral) 88% 100%);
+
+// Overlay / lớp kính — giá trị alpha cố định, không phụ thuộc theme
+$overlay-modal:        rgba(10,15,26,.45);
+$overlay-navbar-light: rgba(255,255,255,.82);
+$overlay-navbar-dark:  rgba(13,19,32,.82);
+$overlay-hero-search:  rgba(255,255,255,.12);
+$overlay-hero-search-border: rgba(255,255,255,.25);
+$overlay-decor-circle: rgba(255,255,255,.08);
+$blur-navbar: blur(10px);
+$blur-modal: blur(2px);
+$blur-hero-search: blur(4px);

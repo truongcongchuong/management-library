@@ -1,0 +1,78 @@
+@use 'abstracts/variables' as v;
+@use 'base/typography' as t;
+@use 'abstracts/mixins' as m;
+
+
+.pub-footer {
+    background-color: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .pub-footer-grid {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: v.$padding-modal-foot;
+        width: 80%;
+        .head-brand {
+            width: 15%;
+            .brand {
+                @include m.font-family-brand;
+                width: 48%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .brand-mark {
+                    @include m.box-logo;
+                }
+
+                svg {
+                    @include m.svg-logo;
+                }
+            }
+
+            .pub-footer-desc {
+                margin-top: 20px;
+                font-weight: v.$fw-medium;
+                color: var(--ink-soft)
+            }
+        }
+    }
+
+    .footer-col {
+        display: flex;
+        flex-direction: column;
+        margin: 0 5%;
+
+        .footer-col-title {
+            margin-bottom: 10px;
+            font-weight: v.$fw-bold;
+            font-size: v.$fs-step-title;
+            color: var(--ink);
+        }
+        
+        a {
+            margin-top: 10px;
+            text-decoration: none;
+            color: var(--ink-soft);
+            font-weight: t.$font-body;
+            font-weight: v.$fw-medium;
+        }
+    }
+
+    .pub-footer-bottom {
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin-top: 20px;
+        padding: 20px 0;
+        color: var(--ink-soft);
+        font-size: v.$fs-field-label;
+        font-weight: v.$fw-bold;
+    }
+}

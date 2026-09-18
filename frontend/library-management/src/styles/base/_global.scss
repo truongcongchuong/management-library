@@ -1,0 +1,20 @@
+@use '../abstracts/mixins' as m;
+@use '../abstracts/variables' as v;
+
+:root {
+  @include m.emit-theme(v.$colors-light);
+
+  --shadow: #{v.$shadow-light};
+  --shadow-modal: #{v.$shadow-modal};
+  --shadow-float: #{v.$shadow-float};
+
+  --sidebar-width: #{v.$sidebar-width};
+  --topbar-height: #{v.$topbar-height};
+  --pub-navbar-height: #{v.$pub-navbar-height};
+  --content-max-width: #{v.$content-max-width};
+}
+
+[data-theme='dark'] {
+  @include m.emit-theme(v.$colors-dark);
+  --shadow: #{v.$shadow-dark};
+}

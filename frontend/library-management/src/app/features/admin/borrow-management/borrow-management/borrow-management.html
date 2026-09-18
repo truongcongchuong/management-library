@@ -1,0 +1,54 @@
+<section class="view" id="admin-borrow">
+  <div class="page-head">
+    <div>
+      <div class="page-title">Quản lý mượn sách</div>
+      <div class="page-desc">Duyệt, xác nhận và theo dõi các phiếu mượn</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button class="genre-chip active">Tất cả (348)</button>
+    <button class="genre-chip">Pending (12)</button>
+    <button class="genre-chip">Borrowing (204)</button>
+    <button class="genre-chip">Returned (75)</button>
+    <button class="genre-chip">Overdue (57)</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Mã phiếu</th>
+          <th>Người mượn</th>
+          <th>Sách</th>
+          <th>Ngày mượn</th>
+          <th>Hạn trả</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+
+      <tbody id="borrowTableBody">
+        <tr>
+          <td class="mono">PM-0231</td>
+          <td>Ngô Thị Hạnh</td>
+          <td>Nhà Giả Kim</td>
+          <td>29/07/2026</td>
+          <td>12/08/2026</td>
+          <td>
+            <span class="badge">Overdue</span>
+          </td>
+          <td>
+            <div class="row-actions">
+              <button class="mini-btn" title="Duyệt">✓</button>
+              <button class="mini-btn" title="Từ chối">✕</button>
+              <!-- <button class="mini-btn" title="Xác nhận trả">✓</button>
+              <button class="mini-btn" title="Gia hạn">⟳</button>
+              <button class="mini-btn" title="Chi tiết">…</button> -->
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
