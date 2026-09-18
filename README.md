@@ -1,10 +1,5 @@
 # 📚 Library Management System - Backend RESTful API
 
-> [!NOTE]
-> **Lưu ý về phạm vi tài liệu**: Tài liệu này tập trung mô tả toàn bộ kiến trúc, chức năng và hướng dẫn cài đặt cho phần **Backend API**. Phần giao diện người dùng (**Frontend** xây dựng bằng Angular) hiện đang trong quá trình phát triển và hoàn thiện, sẽ được bổ sung tài liệu sau khi hoàn thành.
-
----
-
 ## 📖 Giới thiệu tổng quan
 
 **Library Management System (Backend)** là hệ thống quản lý thư viện được xây dựng trên nền tảng **Spring Boot**, cung cấp bộ RESTful API toàn diện cho các hoạt động quản lý sách, danh mục, người dùng, vai trò và quy trình mượn - trả sách. 
