@@ -1,0 +1,64 @@
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins' as m;
+@use 'base/typography' as t;
+
+:host {
+    width: 70%;
+}
+
+.page-head {
+  @include m.box-page-head;
+
+  .page-title {
+    @include m.page-head-title;
+  }
+
+  .page-head-desc {
+    @include m.page-head-desc;
+  }
+
+  svg {
+    @include m.svg-head-page;
+  }
+
+  .btn {
+    @include m.btn;
+  }
+
+  .btn-primary {
+    @include m.btn-primary;
+  }
+}
+
+.grid-2 {
+    @include m.box-grid-2;
+}
+.panel {
+    @include m.panel;
+}
+.btn {
+    @include m.btn;
+    background-color: var(--primary);
+    color: var(--primary-light)
+}
+
+.box-container {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    gap: 10px;
+}
+
+.field-row {
+    flex: 1;
+}
+
+label {
+    @include m.label-input;
+    color: var(--ink-soft)
+}
+.field {
+    input {
+        @include m.input-style;
+    }
+}

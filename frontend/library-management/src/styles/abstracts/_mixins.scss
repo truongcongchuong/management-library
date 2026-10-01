@@ -180,3 +180,127 @@
     background: var(--neutral-bg);
   }
 }
+
+@mixin box-grid-2 {
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:16px;
+    margin-bottom:16px;
+    border-radius: v.$radius-lg;
+}
+
+@mixin panel {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius: v.$radius-lg;
+  padding:20px;
+  box-shadow:var(--shadow);
+
+  .panel-title {
+    font-size: v.$fs-panel-title;
+    font-weight: v.$fw-bold;
+  }
+}
+
+
+// input
+@mixin input-style {
+  width: 100%;
+  border-radius: v.$radius;
+  padding: v.$padding-input;
+  margin-top: 5px;
+  border: 1px solid var(--border);
+  font-size: v.$fs-input;
+  outline: none;
+  box-sizing: border-box;
+
+  &:focus {
+      border-color: var(--primary);
+  }
+}
+
+@mixin label-input {
+  font-size: v.$fs-feat-title;
+  font-weight: v.$fw-bold;
+}
+
+// book card
+@mixin book-card {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  width: 100%;
+
+  .book-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: v.$radius-md;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .book-cover {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    background: v.$gradient-cover;
+  }
+
+  .spine-tag {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 210px;
+    height: 150px;
+  }
+
+  .book-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 5px;
+    padding: 12px 13px 14px;
+  }
+
+  .book-title {
+    font-size: v.$fs-book-title;
+    font-weight: v.$fw-bold;
+    line-height: v.$lh-base;
+  }
+
+  .book-author {
+    font-size: v.$fs-book-author;
+    color: var(--ink-soft);
+  }
+
+  .call-no {
+    margin-top: 2px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--ink-faint);
+  }
+
+  .book-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+
+  .badge {
+    padding: 3px 6px;
+    border-radius: v.$radius-pill;
+  }
+
+  .badge-success {
+    background-color: var(--success-bg);
+    color: var(--success);
+  }
+
+}

@@ -1,5 +1,6 @@
 @use 'abstracts/variables' as v;
 @use 'base/typography' as t;
+@use 'abstracts/mixins' as m;
 
 :host {
     width: 50%;
@@ -26,22 +27,11 @@
         margin: 20px 0;
         width: 100%;
         input {
-            width: 94%;
-            border-radius: v.$radius;
-            padding: v.$padding-input;
-            margin-top: 5px;
-            border: 1px solid var(--border);
-            font-size: v.$fs-input;
-            outline: none;
-
-            &:focus {
-                border-color: var(--primary);
-            }
+            @include m.input-style;
         }
 
-        p {
-            font-size: v.$fs-feat-title;
-            font-weight: v.$fw-bold;
+        label {
+            @include m.label-input;
         }
     }
 
@@ -79,7 +69,7 @@
         margin-top: 60px;
         align-self: stretch;
 
-        button {
+        .login {
             margin: auto;
             width: 100%;
             height: 45px;
@@ -91,5 +81,12 @@
             font-size: v.$fs-button;
             font-weight: v.$fw-bold;
         }
+    }
+
+    .show-password {
+        margin: auto;
+        padding: 10px;
+        background: transparent;
+        border: none;
     }
 }

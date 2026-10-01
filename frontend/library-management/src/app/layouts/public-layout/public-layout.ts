@@ -7,4 +7,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './public-layout.scss',
   templateUrl: './public-layout.html',
 })
-export class PublicLayout {}
+export class PublicLayout {
+  
+}

@@ -1,0 +1,123 @@
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins' as m;
+@use 'base/typography' as t;
+
+:host {
+  width: 80%;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: v.$radius-2xl;
+  padding: v.$padding-pub-hero;
+  background: v.$gradient-brand;
+  color: var(--surface);
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    right: 100px;
+    top: 60px;
+  }
+}
+
+.hero-eyebrow {
+  color: var(--surface-2);
+  font-size: v.$fs-eyebrow;
+}
+
+.hero-title {
+  width: 60%;
+  font-size: v.$fs-hero-title;
+  font-weight: v.$fw-semibold;
+}
+
+.hero-desc {
+  font-weight: v.$fw-semibold;
+}
+
+.hero-search {
+  display: flex;
+  gap: 8px;
+  max-width: 460px;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(4px);
+
+  input {
+    flex: 1;
+    padding: 8px 10px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    font-size: 13px;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.65);
+    }
+  }
+
+  button {
+    padding: 0 18px;
+    border: none;
+    border-radius: 8px;
+    background: #fff;
+    color: var(--primary-dark);
+    font-size: v.$fs-button;
+    font-weight: v.$fw-bold;
+  }
+}
+
+.genre-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  margin-top: 20px;
+}
+
+.genre-chip {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.genre-chip.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 26px 0 14px;
+    .link-sm {
+        text-decoration: none;
+    }
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: v.$fs-brand-name;
+  font-weight: v.$fw-semibold;
+
+}
+
+
+.book-grid {
+    @include m.book-card;
+}

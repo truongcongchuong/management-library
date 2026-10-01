@@ -1,23 +1,75 @@
 <div class="form-login">
     <h1>Chào mừng trở lại</h1>
     <p>Chưa có tài khoản? <a href="#">Đăng ký ngay</a></p>
-    <form>
+    <form (ngSubmit)="login()">
         <div class="form-group">
-            <p>Email</p>
-            <input type="email" id="email" name="email" placeholder="ban@gmail.com" required>
+            <label>Email</label>
+            <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            placeholder="ban@gmail.com" 
+            required 
+            [(ngModel)]="formLogin.email">
         </div>
         <div class="form-group">
-            <p>Mật khẩu</p>
-            <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
+            <label>Mật khẩu</label>
+            <div style="display: flex;">
+                <input 
+                [type]="isShowPassword ? 'text':'password'"
+                id="password" 
+                name="password" 
+                placeholder="Nhập mật khẩu" 
+                required  
+                [(ngModel)]="formLogin.password">
+
+                <button class="show-password" type="button" (click)="showPassword()">
+                    @if(isShowPassword == false) {
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            >
+                            <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20C5 20 1 12 1 12a21.77 21.77 0 0 1 5.06-6.94" />
+                            <path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a21.77 21.77 0 0 1-3.17 4.66" />
+                            <path d="M1 1l22 22" />
+                            <path d="M10.58 10.58A2 2 0 0 0 13.42 13.42" />
+                        </svg>
+                    } @else {
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            >
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    }
+                    
+                </button>
+            </div>
+            
         </div>
         <div class="form-group remember-me">
             <div class="checkbox">
-                <input type="checkbox" id="remember" name="remember">
+                <input type="checkbox" id="remember" name="remember" [(ngModel)]="rememberPassword">
                 <label>Ghi nhớ đăng nhập</label>
             </div>
             
             <a href="#">Quên mật khẩu?</a>
         </div>
-        <button type="submit">Đăng nhập</button>
+        <button type="submit" class="login">Đăng nhập</button>
     </form>
 </div>

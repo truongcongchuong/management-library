@@ -1,8 +1,10 @@
 package com.bookstore.book_management.Dto;
 
+import org.springframework.http.HttpStatus;
+
 public class ApiResponse<T> {
 
-    private int status;
+    private HttpStatus status;
     private String message;
     private T data;
 
@@ -10,7 +12,7 @@ public class ApiResponse<T> {
     }
 
     public ApiResponse(
-            int status,
+            HttpStatus status,
             String message,
             T data
     ) {
@@ -19,15 +21,13 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    // api response status
-
     // =======================
     // SUCCESS
     // =======================
 
     public static <T> ApiResponse<T> ok(T data) {
         return new ApiResponse<>(
-                200,
+                HttpStatus.OK,
                 "Success",
                 data
         );
@@ -38,7 +38,7 @@ public class ApiResponse<T> {
             String message
     ) {
         return new ApiResponse<>(
-                200,
+                HttpStatus.OK,
                 message,
                 data
         );
@@ -46,7 +46,7 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> created(T data) {
         return new ApiResponse<>(
-                201,
+                HttpStatus.CREATED,
                 "Created successfully",
                 data
         );
@@ -57,7 +57,7 @@ public class ApiResponse<T> {
             String message
     ) {
         return new ApiResponse<>(
-                201,
+                HttpStatus.CREATED,
                 message,
                 data
         );
@@ -65,7 +65,7 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> noContent() {
         return new ApiResponse<>(
-                204,
+                HttpStatus.NO_CONTENT,
                 "No content",
                 null
         );
@@ -79,7 +79,7 @@ public class ApiResponse<T> {
             String message
     ) {
         return new ApiResponse<>(
-                400,
+                HttpStatus.BAD_REQUEST,
                 message,
                 null
         );
@@ -89,7 +89,7 @@ public class ApiResponse<T> {
             String message
     ) {
         return new ApiResponse<>(
-                401,
+                HttpStatus.UNAUTHORIZED,
                 message,
                 null
         );
@@ -99,7 +99,7 @@ public class ApiResponse<T> {
             String message
     ) {
         return new ApiResponse<>(
-                403,
+                HttpStatus.FORBIDDEN,
                 message,
                 null
         );
@@ -109,7 +109,7 @@ public class ApiResponse<T> {
             String message
     ) {
         return new ApiResponse<>(
-                404,
+                HttpStatus.NOT_FOUND,
                 message,
                 null
         );
@@ -119,7 +119,7 @@ public class ApiResponse<T> {
             String message
     ) {
         return new ApiResponse<>(
-                409,
+                HttpStatus.CONFLICT,
                 message,
                 null
         );
@@ -131,17 +131,17 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> internalServerError() {
         return new ApiResponse<>(
-                500,
+                HttpStatus.INTERNAL_SERVER_ERROR,
                 "Internal server error",
                 null
         );
     }
 
-    public int getStatus() {
+    public HttpStatus getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(HttpStatus status) {
         this.status = status;
     }
 

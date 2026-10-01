@@ -1,6 +1,6 @@
 @use 'abstracts/variables' as v;
 @use 'base/typography' as t;
-
+@use 'abstracts/mixins' as m;
 
 :host {
     width: 50%;
@@ -28,22 +28,11 @@
         margin: 20px 0;
         width: 100%;
         input {
-            width: 94%;
-            border-radius: v.$radius;
-            padding: v.$padding-input;
-            margin-top: 5px;
-            border: 1px solid var(--border);
-            font-size: v.$fs-input;
-            outline: none;
-
-            &:focus {
-                border-color: var(--primary);
-            }
+            @include m.input-style;
         }
 
-        p {
-            font-size: v.$fs-feat-title;
-            font-weight: v.$fw-bold;
+        label {
+            @include m.label-input;
         }
     }
 
@@ -91,5 +80,23 @@
             font-size: 12px;
             color: var(--ink-soft);
         }
+    }
+}
+
+.checkbox {
+    display: flex;
+    justify-content:left;
+    align-items: center;
+    width: auto;
+    gap: 8px;
+    margin-bottom: 20px;
+    input {
+        margin: 0px;
+    }
+    label {
+        font-family: t.$font-mono;
+        margin: 0;
+        white-space: nowrap;
+        color: var(--ink-soft);
     }
 }

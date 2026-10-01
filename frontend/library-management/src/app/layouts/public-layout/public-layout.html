@@ -1,26 +1,45 @@
 <nav>
-    <div class="nav-brand">
-        <div class="logo">
-             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            <!-- <a href="/"><i class="fa-solid fa-book"></i></a> -->
-        </div>
-        <div class="brand-name">
-            <a href="/">Library</a>
-            <p>Quản lý thư viện</p>
-        </div>  
+  <div class="nav-brand">
+    <div class="logo">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="white"
+        stroke-width="2"
+        stroke-linecap="round"
+      >
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" />
+      </svg>
+      <!-- <a href="/"><i class="fa-solid fa-book"></i></a> -->
     </div>
-    <div class="nav-menu">
-        <a href="/about">Giới thiệu</a>
-        <a href="/services">Danh mục sách</a>
-        <a href="/how-it-works">Cách hoạt động</a>    
-        <a href="/contact">Liên hệ</a>
+
+    <div class="brand-name">
+      <a href="/">Library</a>
+      <p>Quản lý thư viện</p>
     </div>
-    <div class="nav-actions">
-        <button class="btn btn-theme"><i class="fa-regular fa-lightbulb"></i></button>
-        <button class="btn btn-login" [routerLink]="['/login']">Đăng nhập</button>
-        <button class="btn btn-register" [routerLink]="['/register']">Đăng ký</button>
-    </div>
+  </div>
+
+  <div class="nav-menu">
+    <a [routerLink]="['/']">Giới thiệu</a>
+    <a href="/services">Danh mục sách</a>
+    <a href="/how-it-works">Cách hoạt động</a>
+    <a href="/contact">Liên hệ</a>
+  </div>
+
+  <div class="nav-actions">
+    <button class="btn btn-theme" type="button">
+      <i class="fa-regular fa-lightbulb"></i>
+    </button>
+    <button class="btn btn-login" type="button" [routerLink]="['auth/login']">
+      Đăng nhập
+    </button>
+    <button class="btn btn-register" type="button" [routerLink]="['auth/register']">
+      Đăng ký
+    </button>
+  </div>
 </nav>
+
 <main>
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </main>

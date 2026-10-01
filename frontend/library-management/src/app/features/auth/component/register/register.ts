@@ -1,13 +1,46 @@
-import { Component } from '@angular/core';
-
+import { Component, inject } from '@angular/core';
+import { Auth } from '../../../../core/services/auth/auth';
+import { User } from '../../../../core/models/user';
+import { FormsModule } from '@angular/forms';
 @Component({
-  imports: [],
+  imports: [FormsModule],
   selector: 'app-register',
   styleUrl: './register.scss',
   templateUrl: './register.html',
 })
 export class Register {
 
+  authService = inject(Auth);
+  // đăng ký tài khoản
+  newUser: User = {
+    username: '',
+    email:'',
+    password: '',
+  }
+
+  rewritePassword = ''
+  showPassword = false;
+
+  register() {
+    console.log(this.newUser)
+    if (this.rewritePassword != this.newUser.password) {
+      alert("Mật khẩu không trùng khớp")
+      return;
+    }
+
+    this.authService.register(this.newUser)
+    .subscribe({
+      next: (response) => {
+        alert("đăng ký thành công" + response)
+        console.log(JSON.stringify(response, null, 2));
+      },
+      error: (err) => {
+        console.log(err.error);
+        alert("đã có lỗi xảy ra" + err.status)
+      }
+    });
+  }
+  // đánh giá độ mạnh yếu của mật khẩu
   strength = 0;
   strengthMessage = 'Nên có chứ hoa, chữ sô và ký tự đặc biệt';
   barColor = "var(--primary-light)";

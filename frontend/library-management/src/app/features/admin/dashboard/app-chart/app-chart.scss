@@ -3,28 +3,17 @@
 @use 'base/typography' as t;
 
 .grid-2{
-    display:grid;
-    grid-template-columns:1.4fr 1fr;
-    gap:16px;
-    margin-bottom:16px;
-    border-radius: v.$radius-lg;
+
+  @include m.box-grid-2;
 
     .panel{
-        background:var(--surface);
-        border:1px solid var(--border);
-        border-radius: v.$radius-lg;
-        padding:20px;
-        box-shadow:var(--shadow);
+      @include m.panel;
     }
     .panel-head{
         display:flex;
         align-items:center;
         justify-content:space-between;
         margin-bottom:16px;
-    }
-    .panel-title{
-        font-size: v.$fs-panel-title;
-        font-weight: v.$fw-bold;
     }
     .panel-sub{
         font-size:11.5px;

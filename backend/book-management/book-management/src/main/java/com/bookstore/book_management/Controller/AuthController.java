@@ -9,7 +9,6 @@ import com.bookstore.book_management.Dto.ApiResponse;
 import com.bookstore.book_management.Dto.LoginRequest;
 import com.bookstore.book_management.Dto.RefreshRequest;
 import com.bookstore.book_management.Service.AuthService;
-import com.bookstore.book_management.Service.UserService;
 
 import com.bookstore.book_management.Entity.User;
 
@@ -20,15 +19,14 @@ import jakarta.validation.Valid;
 public class AuthController {
     
     private final AuthService authService;
-    private final UserService userService;
 
-    public AuthController(AuthService authService, UserService userService) {
+    public AuthController(AuthService authService) {
         this.authService = authService;
-        this.userService = userService;
     }
 
     @PostMapping("/login")
     public ApiResponse<?> login(@Valid @RequestBody LoginRequest loginRequest) {
+        System.out.println(loginRequest);
         return authService.login(loginRequest);
     }
 
@@ -44,6 +42,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ApiResponse<?> register(@Valid @RequestBody User user) {
-        return userService.createUser(user);
+        return authService.register(user);
     }
 }

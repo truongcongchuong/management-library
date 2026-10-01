@@ -11,7 +11,9 @@ import com.bookstore.book_management.Dto.AuthResponse;
 import com.bookstore.book_management.Dto.LoginRequest;
 import com.bookstore.book_management.Entity.RefreshToken;
 import com.bookstore.book_management.Entity.User;
+import com.bookstore.book_management.Entity.Role;
 import com.bookstore.book_management.Repository.UserRepository;
+import com.bookstore.book_management.Repository.RoleRepository;
 
 @Service
 public class AuthService {
@@ -20,32 +22,41 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final JwtService jwtService;
     private final UserService userService;
+    private final RoleRepository roleRepository;
     private final RefreshTokenService refreshTokenService;
 
-    public AuthService(UserRepository userRepository, JwtService jwtService, UserService userService, RefreshTokenService refreshTokenService) {
+    public AuthService(
+        UserRepository userRepository,
+        JwtService jwtService, 
+        UserService userService, 
+        RefreshTokenService refreshTokenService,
+        RoleRepository roleRepository
+        ) {
         this.userRepository = userRepository;
         this.jwtService = jwtService;
         this.userService = userService;
         this.refreshTokenService = refreshTokenService;
+        this.roleRepository = roleRepository;
     }
 
     public ApiResponse<?> login(LoginRequest loginRequest) {
 
         try {
 
-            User user =
-                    userRepository.findByEmail(
-                            loginRequest.getEmail()
-                    );
+            User user = userRepository.findByEmail(loginRequest.getEmail());
 
-            if (user == null || !passwordEncoder.matches(
-                loginRequest.getPassword(),user.getPassword())
-            ) {
+            if (user == null) {
 
                 return ApiResponse.unauthorized(
-                        "Invalid email or password"
+                        "Invalid email"
                 );
-            }
+            } else if (
+                !passwordEncoder.matches(loginRequest.getPassword(),user.getPassword())
+                ) {
+                        return ApiResponse.unauthorized(
+                        "Incorrect password"
+                        );
+                }
 
             String accessToken =
                     jwtService.generateAccessToken(
@@ -85,9 +96,16 @@ public class AuthService {
             if (userRepository.findByEmail(user.getEmail()) != null) {
                 return ApiResponse.conflict("Email already exists");
             }
+            System.out.println(user.getRole());
+            if (user.getRole() == null) {
+                Role userRole = roleRepository.findByName("USER");
 
-            userService.createUser(user);
-            return ApiResponse.ok(null, "User registered successfully");
+                System.out.println(userRole.getId());
+                user.setRole(userRole);
+            }
+
+            ApiResponse response = userService.createUser(user);
+            return response;
         } catch (Exception e) {
             return ApiResponse.internalServerError();
         }
